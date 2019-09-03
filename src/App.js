@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import './App.css';
 import { connect } from 'react-redux';
 import * as Actions from './ducks/reducer';
+import { BrowserRouter as Router } from 'react-router-dom';
+import routes from './routes';
 
-import Auth from './components/auth/auth';
 
 class App extends Component {
   constructor(props){
@@ -21,9 +22,12 @@ class App extends Component {
   
   render(){
     return (
+      <Router>
         <div className="App">
-          <Auth />
+          {routes}
         </div>
+      </Router>
+        
     )
   }
 }
