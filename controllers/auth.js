@@ -6,7 +6,7 @@ module.exports = {
 
         dbInstance.check_user_exists([email])
         .then( results => {
-            if (!results.data) {
+            if (results.length < 1) {
                 dbInstance.register_user([email, username, password])
                 .then( results => {
                     res.status(200).send('User has been registered')
@@ -15,7 +15,7 @@ module.exports = {
                     res.status(500).send('Sorry, something went wrong')
                 })
             } else {
-                res.status(200).send('User already exists')
+                res.status(200).send('Sorry, it looks like a user with that email already exists')
             }
         })
         .catch( err => {
@@ -29,13 +29,13 @@ module.exports = {
 
         dbInstance.login_user([username, password])
         .then( results => {
-            if (results.data[0]) {
+            if (!results[0]) {
+                res.status(200).send('username or password is incorrect')
+            } else {
                 req.session.user = {
-                    username: results.data.username,
+                    username: results[0].username,
                 }
                 res.status(200).send(req.session.user)
-            } else {
-                res.status(200).send('username or password is incorrect')
             }
         })
         .catch( err => {
