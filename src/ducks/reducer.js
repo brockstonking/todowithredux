@@ -6,7 +6,8 @@ let initialState = {
     registerEmail: '',
     registerUsername: '',
     loginUsername: '',
-    loginPassword: ''
+    loginPassword: '',
+    sessionUsername: ''
 }
 
 const SET_MOBILE = 'SET_MOBILE';
@@ -17,6 +18,7 @@ const SET_REGISTER_EMAIL = 'SET_REGISTER_EMAIL';
 const SET_REGISTER_USERNAME = 'SET_REGISTER_USERNAME';
 const SET_LOGIN_USERNAME = 'SET_LOGIN_USERNAME';
 const SET_LOGIN_PASSWORD = 'SET_LOGIN_PASSWORD';
+const SET_SESSION_USERNAME = 'SET_SESSION_USERNAME';
 
 export const setMobile = (bool) => {
     return {
@@ -45,20 +47,44 @@ export const setInputs = (val, type, inputName) => {
     }
 }
 
+export const updateRedux = (val, type, prop) => {
+    return {
+        type: type,
+        payload: {
+            [prop]: val
+        }
+    }
+}
+
 const reducer = (state = initialState, action) => {
     const { type, payload } = action;
 
     switch(type){
+        //
+        //
+        // Checks if the device is in mobile view (for styling purposes)
+        //
+        //
         case SET_MOBILE:
             return {
                 ...state,
                 mobile: payload.mobile
             }
+        //
+        //
+        // A toggle to display the login box or register box in the Auth component
+        //
+        //
         case SET_LOGIN_OR_REGISTER:
             return {
                 ...state,
                 loginOrRegister: payload.loginOrRegister
             }
+        //
+        //
+        // Updates state for each of the inputs in the login and register areas, again from the Auth component
+        //
+        //
         case SET_REGISTER_PASS:
             return {
                 ...state,
@@ -88,6 +114,16 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 loginPassword: payload.loginPassword
+            }
+        //
+        //
+        // Sets session username to redux state to be used within the application
+        //
+        //
+        case SET_SESSION_USERNAME:
+            return {
+                ...state,
+                sessionUsername: payload.sessionUsername
             }
         default:
             return state

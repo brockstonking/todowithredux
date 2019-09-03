@@ -39,6 +39,7 @@ class Auth extends Component {
             .then( results => {
                 this.props.setInputs('', 'SET_LOGIN_USERNAME', 'loginUsername');
                 this.props.setInputs('', 'SET_LOGIN_PASSWORD', 'loginPassword');
+                this.props.history.push('/main')
             })
             .catch( err => {
                 window.alert(err)

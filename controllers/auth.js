@@ -41,5 +41,12 @@ module.exports = {
         .catch( err => {
             res.status(500).send(err)
         })
+    },
+    getSession: (req, res, next) => {
+        if (req.session.user) {
+            res.status(200).send(req.session.user.username)
+        } else {
+            res.status(200).send(`User has been logged out`)
+        }
     }
 }
