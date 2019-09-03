@@ -14,18 +14,26 @@ class Dashboard extends Component {
             if (results.data === 'User has been logged out') {
                 this.props.history.push('/')
             } else {
-                this.props.updateRedux(results.data, 'SET_SESSION_USERNAME', 'sessionUsername');
+                this.props.updateRedux(results.data.username, 'SET_SESSION_USERNAME', 'sessionUsername');
+                this.props.updateRedux(results.data.user_id, 'SET_SESSION_USER_ID', 'sessionUserId');
+                axios.get(`/api/get_people_and_groups/${ this.props.sessionUserId }`)
+                .then( results => {
+                    this.props.updateRedux(results.data, 'SET_SESSION_PEOPLE_AND_GROUPS', 'sessionPeopleAndGroups')
+                })
+                .catch( err => {
+                    window.alert(err)
+                })
             }
         })
         .catch( err => {
             window.alert(err)
         })
     }
+    
 
     render () {
         return (
             <div>
-                {this.props.sessionUsername}
             </div>
         )
     }

@@ -34,6 +34,7 @@ module.exports = {
             } else {
                 req.session.user = {
                     username: results[0].username,
+                    user_id: results[0].user_id
                 }
                 res.status(200).send(req.session.user)
             }
@@ -44,9 +45,22 @@ module.exports = {
     },
     getSession: (req, res, next) => {
         if (req.session.user) {
-            res.status(200).send(req.session.user.username)
+            res.status(200).send(req.session.user)
         } else {
             res.status(200).send(`User has been logged out`)
         }
+    },
+    getPeopleAndGroups: (req, res, next) => {
+        const dbInstance = req.app.get('db');
+
+        const { user_id } = req.params;
+
+        dbInstance.get_people_and_groups([user_id])
+        .then( results => {
+            res.status(200).send(results);
+        })
+        .catch( err => {
+            res.status(200).send(err);
+        })
     }
 }

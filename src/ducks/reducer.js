@@ -7,7 +7,9 @@ let initialState = {
     registerUsername: '',
     loginUsername: '',
     loginPassword: '',
-    sessionUsername: ''
+    sessionUsername: '',
+    sessionUserId: null,
+    sessionPeopleAndGroups: []
 }
 
 const SET_MOBILE = 'SET_MOBILE';
@@ -19,6 +21,8 @@ const SET_REGISTER_USERNAME = 'SET_REGISTER_USERNAME';
 const SET_LOGIN_USERNAME = 'SET_LOGIN_USERNAME';
 const SET_LOGIN_PASSWORD = 'SET_LOGIN_PASSWORD';
 const SET_SESSION_USERNAME = 'SET_SESSION_USERNAME';
+const SET_SESSION_USER_ID = 'SET_SESSION_USER_ID';
+const SET_SESSION_PEOPLE_AND_GROUPS = 'SET_SESSION_PEOPLE_AND_GROUPS';
 
 export const setMobile = (bool) => {
     return {
@@ -117,13 +121,28 @@ const reducer = (state = initialState, action) => {
             }
         //
         //
-        // Sets session username to redux state to be used within the application
+        // Sets session username and user_id to redux state to be used within the application
         //
         //
         case SET_SESSION_USERNAME:
             return {
                 ...state,
                 sessionUsername: payload.sessionUsername
+            }
+        case SET_SESSION_USER_ID:
+            return {
+                ...state,
+                sessionUserId: payload.sessionUserId
+            }
+        //
+        //
+        // Retrieves people and groups from database, linked to the user_id on sessions
+        //
+        //
+        case SET_SESSION_PEOPLE_AND_GROUPS:
+            return {
+                ...state,
+                sessionPeopleAndGroups: payload.sessionPeopleAndGroups
             }
         default:
             return state
