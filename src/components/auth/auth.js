@@ -37,9 +37,13 @@ class Auth extends Component {
         ? window.alert('Please enter username and password to login')
         : axios.post('/api/login_user', {username: loginUsername, password: loginPassword})
             .then( results => {
-                this.props.setInputs('', 'SET_LOGIN_USERNAME', 'loginUsername');
-                this.props.setInputs('', 'SET_LOGIN_PASSWORD', 'loginPassword');
-                this.props.history.push('/main')
+                if (results.data === 'username or password is incorrect') {
+                    window.alert(results.data)
+                } else {
+                    this.props.setInputs('', 'SET_LOGIN_USERNAME', 'loginUsername');
+                    this.props.setInputs('', 'SET_LOGIN_PASSWORD', 'loginPassword');
+                    this.props.history.push('/main');
+                }
             })
             .catch( err => {
                 window.alert(err)
