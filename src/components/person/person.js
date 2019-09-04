@@ -9,18 +9,19 @@ class AddPerson extends Component {
         super(props)
     }
 
-    setPages = (person_id) => {
-        this.props.updateRedux(person_id, 'SET_SELECTED_PERSON', 'selectedPerson')
-        axios.get(`/api/get_person_pages/${ person_id }`)
+    setPages = async (person_id) => {
+        await axios.get(`/api/get_person_pages/${ person_id }`)
         .then( results => {
             this.props.updateRedux(results.data, 'SET_PERSON_PAGES', 'personPages');
             if (person_id !== this.props.selectedPerson) {
                 this.props.updateRedux([], 'SET_PAGE_TODOS', 'pageTodos');
+                this.props.updateRedux(null, 'SET_SELECTED_PAGE', 'selectedPage');
             }
         })
         .catch( err => {
             window.alert(err)
         })
+        this.props.updateRedux(person_id, 'SET_SELECTED_PERSON', 'selectedPerson')
     }
 
     showAdd = () => {
