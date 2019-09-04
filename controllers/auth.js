@@ -101,5 +101,31 @@ module.exports = {
         .catch( err => {
             res.status(500).send(err)
         })
+    },
+    addPage: (req, res, next) => {
+        const dbInstance = req.app.get('db');
+
+        const { person_id, page_name } = req.body;
+
+        dbInstance.add_page([page_name, person_id])
+        .then( results => {
+            res.status(200).send(results)
+        })
+        .catch( err => {
+            res.status(500).send(err)
+        })
+    },
+    addTodo: (req, res, next) => {
+        const dbInstance = req.app.get('db');
+
+        const { page_id, todo } = req.body;
+
+        dbInstance.add_todo([todo, page_id])
+        .then( results => {
+            res.status(200).send(results)
+        })
+        .catch( err => {
+            res.status(500).send(err)
+        })
     }
 }

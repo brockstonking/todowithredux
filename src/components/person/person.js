@@ -10,10 +10,13 @@ class AddPerson extends Component {
     }
 
     setPages = (person_id) => {
+        this.props.updateRedux(person_id, 'SET_SELECTED_PERSON', 'selectedPerson')
         axios.get(`/api/get_person_pages/${ person_id }`)
         .then( results => {
             this.props.updateRedux(results.data, 'SET_PERSON_PAGES', 'personPages');
-            this.props.updateRedux([], 'SET_PAGE_TODOS', 'pageTodos');
+            if (person_id !== this.props.selectedPerson) {
+                this.props.updateRedux([], 'SET_PAGE_TODOS', 'pageTodos');
+            }
         })
         .catch( err => {
             window.alert(err)

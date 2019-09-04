@@ -9,5 +9,7 @@ router.get('/api/get_people_and_groups/:user_id', authController.getPeopleAndGro
 router.get('/api/get_person_pages/:person_id', authController.getPersonPages);
 router.get('/api/get_page_todos/:page_id', authController.getPageTodos);
 router.post('/api/add_person_group', authController.addPersonGroup);
+router.post('/api/add_page', authController.addPage);
+router.post('/api/add_todo', authController.addTodo);
 
 module.exports = router;

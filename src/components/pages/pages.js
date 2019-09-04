@@ -10,6 +10,7 @@ class Pages extends Component {
     }
 
     setTodos = (page_id) => {
+        this.props.updateRedux(page_id, 'SET_SELECTED_PAGE', 'selectedPage');
         axios.get(`/api/get_page_todos/${ page_id }`)
         .then( results => {
             this.props.updateRedux(results.data, 'SET_PAGE_TODOS', 'pageTodos');
@@ -24,7 +25,15 @@ class Pages extends Component {
     }
 
     addPage = () => {
-
+        axios.post('/api/add_page', { person_id: this.props.selectedPerson, page_name: this.props.addPageName })
+        .then( results => {
+            this.props.updateRedux(results.data, 'SET_PERSON_PAGES', 'personPages');
+            this.showAdd();
+            this.props.setInputs('', 'SET_ADD_PAGE_NAME', 'addPageName')
+        })
+        .catch( err => {
+            window.alert(err)
+        })
     }
 
     render () {
@@ -42,18 +51,20 @@ class Pages extends Component {
                 onChange={ e => this.props.setInputs(e.target.value, 'SET_ADD_PAGE_NAME', 'addPageName') }
                 value={this.props.addPageName}
             />
-            <div>Add</div>
+            <div onClick={ () => this.addPage() }>Add</div>
         </div>
         : <div></div>;
 
         let addOrCancel = 
-        this.props.personPages.length < 1
+        !this.props.selectedPerson
         ? <div></div>
         : !this.props.showAddPage
         ? <Plus />
         : <p>Cancel</p>;
+
         return (
             <div>
+                <h3>Pages:</h3>
                 { pages }
                 { addPageInput }
                 <div onClick={ () => this.showAdd() }>{ addOrCancel }</div>

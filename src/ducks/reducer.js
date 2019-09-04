@@ -9,13 +9,17 @@ let initialState = {
     loginPassword: '',
     addPersonGroupName: '',
     addPageName: '',
+    addTodoItem: '',
     sessionUsername: '',
     sessionUserId: null,
     sessionPeopleAndGroups: [],
     personPages: [],
     pageTodos: [],
     showAddPerson: false,
-    showAddPage: false
+    showAddPage: false,
+    selectedPerson: null,
+    selectedPage: null,
+    showAddTodo: false
 }
 
 const SET_MOBILE = 'SET_MOBILE';
@@ -35,6 +39,10 @@ const SET_SHOW_ADD_PERSON = 'SET_SHOW_ADD_PERSON';
 const SET_ADD_PERSON_GROUP_NAME = 'SET_ADD_PERSON_GROUP_NAME';
 const SET_SHOW_ADD_PAGE = 'SET_SHOW_ADD_PAGE';
 const SET_ADD_PAGE_NAME = 'SET_ADD_PAGE_NAME';
+const SET_SELECTED_PERSON = 'SET_SELECTED_PERSON';
+const SET_SELECTED_PAGE = 'SET_SELECTED_PAGE';
+const SET_SHOW_ADD_TODO = 'SET_SHOW_ADD_TODO';
+const SET_ADD_TODO_ITEM = 'SET_ADD_TODO_ITEM';
 
 export const setMobile = (bool) => {
     return {
@@ -141,6 +149,11 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 addPageName: payload.addPageName
             }
+        case SET_ADD_TODO_ITEM:
+            return {
+                ...state,
+                addTodoItem: payload.addTodoItem
+            }
         //
         //
         // Sets session username and user_id to redux state to be used within the application
@@ -188,6 +201,21 @@ const reducer = (state = initialState, action) => {
             }
         //
         //
+        // The below cases store the id of the person or page that is selected
+        //
+        //
+        case SET_SELECTED_PERSON:
+            return {
+                ...state,
+                selectedPerson: payload.selectedPerson
+            }
+        case SET_SELECTED_PAGE:
+            return {
+                ...state,
+                selectedPage: payload.selectedPage
+            }
+        //
+        //
         // the following three cases are to display the input boxes to add a new person/group, page, and todo (respectively)
         //
         //
@@ -200,6 +228,11 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 showAddPage: payload.showAddPage
+            }
+        case SET_SHOW_ADD_TODO:
+            return {
+                ...state,
+                showAddTodo: payload.showAddTodo
             }
         default:
             return state
