@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as Actions from './../../ducks/reducer';
 import axios from 'axios';
-import { Plus } from 'react-feather';
+import { Plus, Menu } from 'react-feather';
 
 class Pages extends Component {
     constructor(props){
@@ -38,8 +38,13 @@ class Pages extends Component {
 
     render () {
         let pages = this.props.personPages.map( e => {
-            return <div onClick={ () => this.setTodos(e.page_id) }>
-                <p>{e.page_name}</p>
+            return <div style={{ display: 'flex' }}>
+                <div style={{ marginRight: '10px' }}>
+                    <Menu />
+                </div>
+                <div onClick={ () => this.setTodos(e.page_id) }>
+                    { e.page_name }
+                </div>
             </div>
         })
 

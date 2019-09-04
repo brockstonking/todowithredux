@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as Actions from './../../ducks/reducer';
 import axios from 'axios';
-import { Plus } from 'react-feather';
+import { Plus, Menu } from 'react-feather';
+import './todos.css';
 
 class Todos extends Component {
     constructor(props){
@@ -27,7 +28,18 @@ class Todos extends Component {
 
     render () {
         let todos = this.props.pageTodos.map( e => {
-            return <p>{ e.todo }</p>
+            return <div style={{ display: 'flex' }}>
+                <div className='todosMenuIcon'>
+                    <Menu />
+                </div>
+                <div>
+                    {e.todo}
+                </div>
+                <div className='todosEditAndDelete'>
+                    <div>Edit</div>
+                    <div>Delete</div>
+                </div>
+            </div>
         })
 
         let addOrCancel = 

@@ -1,0 +1,16 @@
+.todosEditAndDelete {
+    position: absolute;
+    top: 100px;
+    right: 2%;
+    height: 0px;
+    overflow: hidden;
+}
+
+.todosMenuIcon:hover ~ .todosEditAndDelete {
+    height: 500px;
+}
+
+.todosMenuIcon {
+    cursor: pointer;
+    padding: 1px;
+}

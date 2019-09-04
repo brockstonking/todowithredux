@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as Actions from '../../ducks/reducer';
 import axios from 'axios';
-import { Plus } from 'react-feather';
+import { Plus, Menu } from 'react-feather';
 
 class AddPerson extends Component {
     constructor(props){
@@ -46,8 +46,13 @@ class AddPerson extends Component {
 
     render () {
         let peopleAndGroups = this.props.sessionPeopleAndGroups.map( (e, i) => {
-            return <div onClick={() => this.setPages(e.person_id)}>
-                <h5>{e.name}</h5>
+            return <div style={{ display: 'flex' }}>
+                <div style={{ marginRight: '10px' }}>
+                    <Menu />
+                </div>
+                <div onClick={() => this.setPages(e.person_id)}>
+                    {e.name}
+                </div>
             </div>
         });
 
