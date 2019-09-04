@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as Actions from './../../ducks/reducer';
 import axios from 'axios';
+import Person from './../person/person';
+import Pages from './../pages/pages';
+import Todos from './../todos/todos';
 
 class Dashboard extends Component {
     constructor(props){
@@ -33,7 +36,10 @@ class Dashboard extends Component {
 
     render () {
         return (
-            <div>
+            <div style={ { display: 'flex', justifyContent: 'space-between', width: '80%', margin: 'auto' } }>
+                <Person />
+                <Pages />
+                <Todos />
             </div>
         )
     }

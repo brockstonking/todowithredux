@@ -62,5 +62,44 @@ module.exports = {
         .catch( err => {
             res.status(200).send(err);
         })
+    },
+    getPersonPages: (req, res, next) => {
+        const dbInstance = req.app.get('db');
+
+        const { person_id } = req.params;
+
+        dbInstance.get_person_pages([person_id])
+        .then( results => {
+            res.status(200).send(results);
+        })
+        .catch( err => {
+            res.status(200).send(err);
+        })
+    },
+    getPageTodos: (req, res, next) => {
+        const dbInstance = req.app.get('db');
+
+        const { page_id } = req.params;
+
+        dbInstance.get_page_todos([page_id])
+        .then( results => {
+            res.status(200).send(results);
+        })
+        .catch( err => {
+            res.status(200).send(err);
+        })
+    },
+    addPersonGroup: (req, res, next) => {
+        const dbInstance = req.app.get('db');
+
+        const { name, user_id } = req.body;
+
+        dbInstance.add_person_group([name, user_id])
+        .then( results => {
+            res.status(200).send(results)
+        })
+        .catch( err => {
+            res.status(500).send(err)
+        })
     }
 }

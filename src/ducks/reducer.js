@@ -7,9 +7,15 @@ let initialState = {
     registerUsername: '',
     loginUsername: '',
     loginPassword: '',
+    addPersonGroupName: '',
+    addPageName: '',
     sessionUsername: '',
     sessionUserId: null,
-    sessionPeopleAndGroups: []
+    sessionPeopleAndGroups: [],
+    personPages: [],
+    pageTodos: [],
+    showAddPerson: false,
+    showAddPage: false
 }
 
 const SET_MOBILE = 'SET_MOBILE';
@@ -23,6 +29,12 @@ const SET_LOGIN_PASSWORD = 'SET_LOGIN_PASSWORD';
 const SET_SESSION_USERNAME = 'SET_SESSION_USERNAME';
 const SET_SESSION_USER_ID = 'SET_SESSION_USER_ID';
 const SET_SESSION_PEOPLE_AND_GROUPS = 'SET_SESSION_PEOPLE_AND_GROUPS';
+const SET_PERSON_PAGES = 'SET_PERSON_PAGES';
+const SET_PAGE_TODOS = 'SET_PAGE_TODOS';
+const SET_SHOW_ADD_PERSON = 'SET_SHOW_ADD_PERSON';
+const SET_ADD_PERSON_GROUP_NAME = 'SET_ADD_PERSON_GROUP_NAME';
+const SET_SHOW_ADD_PAGE = 'SET_SHOW_ADD_PAGE';
+const SET_ADD_PAGE_NAME = 'SET_ADD_PAGE_NAME';
 
 export const setMobile = (bool) => {
     return {
@@ -86,7 +98,7 @@ const reducer = (state = initialState, action) => {
             }
         //
         //
-        // Updates state for each of the inputs in the login and register areas, again from the Auth component
+        // Updates state for each of the inputs throughout the app
         //
         //
         case SET_REGISTER_PASS:
@@ -119,6 +131,16 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 loginPassword: payload.loginPassword
             }
+        case SET_ADD_PERSON_GROUP_NAME:
+            return {
+                ...state,
+                addPersonGroupName: payload.addPersonGroupName
+            }
+        case SET_ADD_PAGE_NAME:
+            return {
+                ...state,
+                addPageName: payload.addPageName
+            }
         //
         //
         // Sets session username and user_id to redux state to be used within the application
@@ -143,6 +165,41 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 sessionPeopleAndGroups: payload.sessionPeopleAndGroups
+            }
+        //
+        //
+        // Retrieves pages from database, linked to the pesron_id on the person_table
+        //
+        //    
+        case SET_PERSON_PAGES:
+            return {
+                ...state,
+                personPages: payload.personPages
+            }
+        //
+        //
+        // Retrieves todos from database, linked to the page_id on the pages_table
+        //
+        // 
+        case SET_PAGE_TODOS:
+            return {
+                ...state,
+                pageTodos: payload.pageTodos
+            }
+        //
+        //
+        // the following three cases are to display the input boxes to add a new person/group, page, and todo (respectively)
+        //
+        //
+        case SET_SHOW_ADD_PERSON:
+            return {
+                ...state,
+                showAddPerson: payload.showAddPerson
+            }
+        case SET_SHOW_ADD_PAGE:
+            return {
+                ...state,
+                showAddPage: payload.showAddPage
             }
         default:
             return state

@@ -2,18 +2,21 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as Actions from './../../ducks/reducer';
 
-class AddPerson extends Component {
+class Todos extends Component {
     constructor(props){
         super(props)
     }
 
     render () {
+        let todos = this.props.pageTodos.map( e => {
+            return <p>{ e.todo }</p>
+        })
         return (
             <div>
-                <h3>People/Groups:</h3>
+                {todos}
             </div>
         )
     }
 }
 
-export default connect(state => state, Actions)(AddPerson);
+export default connect(state => state, Actions)(Todos);
