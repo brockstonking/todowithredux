@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as Actions from './../../ducks/reducer';
 import axios from 'axios';
-import { Plus, Menu } from 'react-feather';
+import { Plus } from 'react-feather';
 import './todos.css';
+import SingleTodo from './singleTodo/singleTodo';
 
 class Todos extends Component {
     constructor(props){
@@ -26,21 +27,21 @@ class Todos extends Component {
         this.props.updateRedux(this.props.showAddTodo ? false : true, 'SET_SHOW_ADD_TODO', 'showAddTodo')
     }
 
+    showEditAndDelete = async () => {
+        await this.props.updateRedux(true, 'SET_SHOW_EDIT_AND_DELETE', 'showEditAndDelete')
+        console.log(this.props.showEditAndDelete)
+    }
+
+    unshowEditAndDelete = async () => {
+        await this.props.updateRedux(false, 'SET_SHOW_EDIT_AND_DELETE', 'showEditAndDelete')
+        console.log(this.props.showEditAndDelete)
+    }
+
     render () {
-        let todos = this.props.pageTodos.map( e => {
-            return <div style={{ display: 'flex' }}>
-                <div className='todosMenuIcon'>
-                    <Menu />
-                </div>
-                <div>
-                    {e.todo}
-                </div>
-                <div className='todosEditAndDelete'>
-                    <div>Edit</div>
-                    <div>Delete</div>
-                </div>
-            </div>
+        let todos = this.props.pageTodos.map( (e, i) => {
+            return <SingleTodo todo={ e.todo } key={ i } index={ i } todoId={ e.todo_id } />
         })
+        
 
         let addOrCancel = 
         !this.props.selectedPage
